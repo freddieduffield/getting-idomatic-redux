@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import store from './redux/store';
+import { ADD_TODO } from './redux/Todos/todos';
+
+let nextTodoId = 0;
 
 class App extends Component {
+  componentDidMount() {
+    console.log(this.props.todos);
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <input
+          type="text"
+          ref={node => {
+            this.input = node;
+          }}
+        />
+        <button
+          onClick={() => {
+            store.dispatch({
+              type: ADD_TODO,
+              text: this.input.value,
+              id: nextTodoId++
+            });
+            this.input.value = '';
+          }}
+        >
+          Add Todo
+        </button>
+        <ul>
+          {this.props.todos.map(todo => (
+            <li key={todo.id}>{todo.text}</li>
+          ))}
+        </ul>
       </div>
     );
   }
