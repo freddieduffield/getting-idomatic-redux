@@ -1,14 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoApp from './components/container/TodoApp';
-import store from './redux/store';
+import TodoApp from './components/scene/TodoApp';
+import { createStore } from 'redux';
+import todoApp from './redux/reducers';
 
-const render = () => {
-  ReactDOM.render(
-    <TodoApp {...store.getState()} />,
-    document.getElementById('root')
-  );
-};
-
-store.subscribe(render);
-render();
+ReactDOM.render(
+  <TodoApp store={createStore(todoApp)} />,
+  document.getElementById('root')
+);
