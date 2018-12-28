@@ -6,6 +6,7 @@ import {
   SET_VISIBILITY_FILTER
 } from '../../redux/VisibilityFilter/VisibilityFilter';
 import { AddTodo, Footer, TodoList } from '../presentational/index';
+import VisibleTodoList from './VisibleTodoList';
 
 let nextTodoId = 0;
 
@@ -21,15 +22,7 @@ const TodoApp = ({ todos, visibilityFilter }) => {
           })
         }
       />
-      <TodoList
-        todos={getVisibleTodos(todos, visibilityFilter)}
-        onTodoClick={id =>
-          store.dispatch({
-            type: TOGGLE_TODO,
-            id
-          })
-        }
-      />
+      <VisibleTodoList />
       <Footer
         visibilityFilter={visibilityFilter}
         onFilterClick={filter =>
