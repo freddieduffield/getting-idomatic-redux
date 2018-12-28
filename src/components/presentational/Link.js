@@ -1,8 +1,8 @@
 import React from 'react';
 
-const FilterLink = ({ onClick, name, isAcitve }) => {
-  if (isAcitve) {
-    return <span>{name}</span>;
+const Link = ({ onClick, children, acitve }) => {
+  if (acitve) {
+    return <span>{children}</span>;
   }
 
   return (
@@ -13,9 +13,9 @@ const FilterLink = ({ onClick, name, isAcitve }) => {
         onClick();
       }}
     >
-      {name}
+      {children}
     </a>
   );
 };
 
-export default FilterLink;
+export default Link;
