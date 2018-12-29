@@ -1,6 +1,7 @@
 import React from 'react';
-import { AddTodo, Footer } from '../presentational/index';
+import { Footer } from '../presentational/index';
 import VisibleTodoList from '../container/VisibleTodoList';
+import AddTodo from '../container/AddTodo';
 
 const TodoApp = () => {
   return (

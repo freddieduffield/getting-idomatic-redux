@@ -15,7 +15,6 @@ const Footer = ({ store }) => (
     <FilterLink filter="SHOW_COMPLETED" store={store}>
       Completed
     </FilterLink>
-    />
   </p>
 );
 

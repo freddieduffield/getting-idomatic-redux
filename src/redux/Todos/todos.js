@@ -1,12 +1,13 @@
+import { v4 } from 'uuid';
 // Constants
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 // Action Creators
-let nextTodoId = 0;
+
 export const addTodo = text => ({
   type: ADD_TODO,
-  id: (nextTodoId++).toString(),
+  id: v4(),
   text
 });
 
