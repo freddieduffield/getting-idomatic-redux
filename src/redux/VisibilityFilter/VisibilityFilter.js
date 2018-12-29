@@ -7,6 +7,13 @@ export const filters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 
+export const setVisibilityFilter = filter => {
+  return {
+    type: 'SET_VISIBILITY_FILTER',
+    filter
+  };
+};
+
 // Reducer
 
 const visibilityFilter = (state = 'SHOW_ALL', action) => {
