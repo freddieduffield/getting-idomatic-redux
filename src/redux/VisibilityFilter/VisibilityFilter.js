@@ -7,12 +7,10 @@ export const filters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 
-export const setVisibilityFilter = filter => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  };
-};
+export const setVisibilityFilter = filter => ({
+  type: 'SET_VISIBILITY_FILTER',
+  filter
+});
 
 // Reducer
 

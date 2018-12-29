@@ -4,20 +4,16 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 // Action Creators
 let nextTodoId = 0;
-export const addTodo = text => {
-  return {
-    type: ADD_TODO,
-    id: nextTodoId++,
-    text
-  };
-};
+export const addTodo = text => ({
+  type: ADD_TODO,
+  id: (nextTodoId++).toString(),
+  text
+});
 
-export const toggleTodo = id => {
-  return {
-    type: TOGGLE_TODO,
-    id
-  };
-};
+export const toggleTodo = id => ({
+  type: TOGGLE_TODO,
+  id
+});
 
 // Reducer
 // reducer always passed to arguments state and action
