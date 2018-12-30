@@ -10,7 +10,7 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 // Action Creators
 
-export const requestTodos = filter => ({
+const requestTodos = filter => ({
   type: 'REQUEST_TODOS',
   filter
 });
@@ -21,8 +21,11 @@ const recieveTodos = (filter, response) => ({
   response
 });
 
-export const fetchTodos = filter => {
-  api.fetchTodos(filter).then(response => recieveTodos(filter, response));
+export const fetchTodos = filter => dispatch => {
+  dispatch(requestTodos(filter));
+  return api
+    .fetchTodos(filter)
+    .then(response => recieveTodos(filter, response));
 };
 
 export const addTodo = text => ({
