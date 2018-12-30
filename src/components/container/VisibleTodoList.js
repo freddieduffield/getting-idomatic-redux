@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getVisibleTodos } from '../../redux/reducers';
 import * as actions from '../../redux/Todos/todos';
 import { TodoList } from '../presentational/index';
-import { fetchTodos } from '../../api/index';
 
 class VisibleTodoList extends Component {
   componentDidMount() {
@@ -18,8 +18,8 @@ class VisibleTodoList extends Component {
   }
 
   fetchData() {
-    const { filter, recieveTodos } = this.props;
-    fetchTodos(filter).then(todos => recieveTodos(filter, todos));
+    const { filter, fetchTodos } = this.props;
+    fetchTodos(filter);
   }
   render() {
     const { toggleTodo, ...rest } = this.props;
@@ -27,7 +27,11 @@ class VisibleTodoList extends Component {
   }
 }
 
-fetchTodos('all').then(todos => console.log(todos));
+VisibleTodoList.propTypes = {
+  filter: PropTypes.oneOf(['all', 'active', 'completed']).isRequired,
+  fetchTodos: PropTypes.func.isRequired,
+  toggleTodo: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, { match }) => {
   const filter = match.params.filter || 'all';

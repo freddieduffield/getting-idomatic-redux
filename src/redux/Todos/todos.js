@@ -1,17 +1,23 @@
 import { v4 } from 'uuid';
 import todo from './todo';
 import { combineReducers } from 'redux';
+import * as api from '../../api/index';
+
 // Constants
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 // Action Creators
 
-export const recieveTodos = (filter, response) => ({
+const recieveTodos = (filter, response) => ({
   type: 'RECIEVE_TODOS',
   filter,
   response
 });
+
+export const fetchTodos = filter => {
+  api.fetchTodos(filter).then(response => recieveTodos(filter, response));
+};
 
 export const addTodo = text => ({
   type: ADD_TODO,
