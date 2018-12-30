@@ -1,4 +1,6 @@
 import { v4 } from 'uuid';
+import todo from './todo';
+import { combineReducers } from 'redux';
 // Constants
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
@@ -17,44 +19,48 @@ export const toggleTodo = id => ({
 });
 
 // Reducer
-// reducer always passed to arguments state and action
 
-const todo = (state, action) => {
-  // each action is passed to the reducer
+const byId = (state = {}, action) => {
   switch (action.type) {
-    //   if add todo action is dispatched...
     case ADD_TODO:
-      // return an object containing id, text and whether or not it is completed
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false
-      };
-    //   If the Toggle todo action is dispatched
     case TOGGLE_TODO:
-      // id the state id is not equal to action id, return simply state
-      if (state.id !== action.id) {
-        return state;
-      }
-      //   Else return  state and state completed
       return {
         ...state,
-        completed: !state.completed
+        [action.id]: todo(state[action.id], action)
       };
     default:
       return state;
   }
 };
 
-const todos = (state = [], action) => {
+const allIds = (state = [], action) => {
   switch (action.type) {
-    case ADD_TODO:
-      return [...state, todo(undefined, action)];
-    case TOGGLE_TODO:
-      return state.map(t => todo(t, action));
+    case 'ADD_TODO':
+      return [...state, action.id];
     default:
       return state;
   }
 };
 
+const todos = combineReducers({
+  byId,
+  allIds
+});
+
 export default todos;
+
+const getAllTodos = state => state.allIds.map(id => state.byId[id]);
+
+export const getVisibleTodos = (state, filter) => {
+  const allTodos = getAllTodos(state);
+  switch (filter) {
+    case 'all':
+      return allTodos;
+    case 'completed':
+      return allTodos.filter(t => t.completed);
+    case 'active':
+      return allTodos.filter(t => !t.completed);
+    default:
+      throw new Error(`Unknown filter: ${filter}`);
+  }
+};
