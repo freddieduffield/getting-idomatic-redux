@@ -21,8 +21,13 @@ const recieveTodos = (filter, response) => ({
   response
 });
 
-export const fetchTodos = filter => dispatch => {
+export const fetchTodos = filter => (dispatch, getState) => {
+  if (getIsFetching(getState(), filter)) {
+    return Promise.resolve();
+  }
+
   dispatch(requestTodos(filter));
+
   return api
     .fetchTodos(filter)
     .then(response => recieveTodos(filter, response));
@@ -39,7 +44,7 @@ export const toggleTodo = id => ({
   id
 });
 
-// Reducers
+// reducers
 
 const listByFilter = combineReducers({
   all: createList('all'),
@@ -55,7 +60,7 @@ const todos = combineReducers({
 export default todos;
 
 export const getVisibleTodos = (state, filter) => {
-  const ids = fromList.getIds(state.idsByFilter[filter]);
+  const ids = fromList.getIds(state.listByFilter[filter]);
   return ids.map(id => fromById.getTodo(state.byId, id));
 };
 

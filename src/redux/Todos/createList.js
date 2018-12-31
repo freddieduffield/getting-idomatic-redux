@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 
 const createList = filter => {
+  // eslint-disable-line arrow-body-style
   const ids = (state = [], action) => {
-    if (action.filter !== filter) {
+    if (filter !== action.filter) {
       return state;
     }
     switch (action.type) {
-      case 'RECIEVE_TODOS':
+      case 'RECEIVE_TODOS':
         return action.response.map(todo => todo.id);
       default:
         return state;
@@ -14,24 +15,26 @@ const createList = filter => {
   };
 
   const isFetching = (state = false, action) => {
-    if (action.filter !== filter) {
+    if (filter !== action.filter) {
       return state;
     }
     switch (action.type) {
       case 'REQUEST_TODOS':
         return true;
-      case 'RECIEVE_TODOS':
+      case 'RECEIVE_TODOS':
         return false;
       default:
         return state;
     }
   };
 
-  return combineReducers({ ids, isFetching });
+  return combineReducers({
+    ids,
+    isFetching
+  });
 };
 
 export default createList;
 
 export const getIds = state => state.ids;
-
 export const getIsFetching = state => state.isFetching;
