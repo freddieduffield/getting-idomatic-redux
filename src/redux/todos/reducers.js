@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import {
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE,
-  FETCH_TODOS_REQUEST
+  FETCH_TODOS_REQUEST,
+  ADD_TODO_SUCCESS
 } from './types';
 
 import * as selector from './selectors';
@@ -15,6 +16,11 @@ const byId = (state = {}, action) => {
         nextState[todo.id] = todo;
       });
       return nextState;
+    case ADD_TODO_SUCCESS:
+      return {
+        ...state,
+        [action.response.id]: action.response
+      };
     default:
       return state;
   }
@@ -23,12 +29,13 @@ const byId = (state = {}, action) => {
 const createList = filter => {
   // eslint-disable-line arrow-body-style
   const ids = (state = [], action) => {
-    if (filter !== action.filter) {
-      return state;
-    }
     switch (action.type) {
       case FETCH_TODOS_SUCCESS:
-        return action.response.map(todo => todo.id);
+        return filter === action.filter
+          ? action.response.map(todo => todo.id)
+          : state;
+      case ADD_TODO_SUCCESS:
+        return filter !== 'completed' ? [...state, action.response.id] : state;
       default:
         return state;
     }

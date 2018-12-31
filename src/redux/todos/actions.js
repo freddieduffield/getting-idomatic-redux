@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 import * as api from '../../api/index';
 import * as selector from './selectors';
 import {
@@ -37,11 +36,13 @@ export const fetchTodos = filter => (dispatch, getState) => {
   );
 };
 
-export const addTodo = text => ({
-  type: ADD_TODO,
-  id: v4(),
-  text
-});
+export const addTodo = text => dispatch =>
+  api.addTodo(text).then(response => {
+    dispatch({
+      type: FETCH_TODOS_SUCCESS,
+      response
+    });
+  });
 
 export const toggleTodo = id => ({
   type: TOGGLE_TODO,
