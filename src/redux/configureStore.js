@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
-import todoApp from './reducers';
+import todoApp from './rootReducer';
 
 const configureStore = () => {
   const middlewares = [thunk];

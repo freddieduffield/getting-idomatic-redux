@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import configureStore from './redux/store';
+import configureStore from './redux/configureStore';
 import Root from './components/Root';
 
 const store = configureStore();
