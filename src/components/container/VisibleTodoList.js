@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getVisibleTodos, getIsFetching } from '../../redux/Todos/todos';
-import * as actions from '../../redux/Todos/todos';
 import { TodoList } from '../presentational/index';
+import { getVisibleTodos, getIsFetching } from '../../redux/todos/selectors';
+import * as actions from '../../redux/todos/actions';
 
 class VisibleTodoList extends Component {
   componentDidMount() {
