@@ -6,6 +6,7 @@
     "deepfreeze": "^2.0.0",
     "expect": "^23.6.0",
     "lodash": "^4.17.11",
+    "normalizr": "^3.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
