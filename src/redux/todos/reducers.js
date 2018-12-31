@@ -3,7 +3,8 @@ import {
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE,
   FETCH_TODOS_REQUEST,
-  ADD_TODO_SUCCESS
+  ADD_TODO_SUCCESS,
+  TOGGLE_TODO_SUCCESS
 } from './types';
 
 import * as selector from './selectors';
@@ -20,6 +21,17 @@ const byId = (state = {}, action) => {
 };
 
 const createList = filter => {
+  const handleToggle = (state, action) => {
+    const { result: toogleId, entities} = action.reponse;
+    const { completed } = entities.todos[toggleId];
+    const shouldRemove = (
+      (completed && filter === 'active') ||
+      (!completed && filter === 'completed')
+    );
+    return shouldRemove ? 
+      state.filter(id => id !== toggledId) :
+      state;
+  };
   // eslint-disable-line arrow-body-style
   const ids = (state = [], action) => {
     switch (action.type) {
@@ -29,6 +41,8 @@ const createList = filter => {
           : state;
       case ADD_TODO_SUCCESS:
         return filter !== 'completed' ? [...state, action.response.result] : state;
+      case TOGGLE_TODO_SUCCESS:
+        return handleToggle(state, action)  
       default:
         return state;
     }
