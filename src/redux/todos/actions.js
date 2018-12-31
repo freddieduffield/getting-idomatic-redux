@@ -1,20 +1,21 @@
 import { v4 } from 'uuid';
 import * as api from '../../api/index';
 import * as selector from './selectors';
+import { REQUEST_TODOS, RECIEVE_TODOS, ADD_TODO, TOGGLE_TODO } from './types';
 
 const requestTodos = filter => ({
-  type: 'REQUEST_TODOS',
+  type: REQUEST_TODOS,
   filter
 });
 
 const recieveTodos = (filter, response) => ({
-  type: 'RECIEVE_TODOS',
+  type: RECIEVE_TODOS,
   filter,
   response
 });
 
 export const fetchTodos = filter => (dispatch, getState) => {
-  if (getIsFetching(getState(), filter)) {
+  if (selector.getIsFetching(getState(), filter)) {
     return Promise.resolve();
   }
 
