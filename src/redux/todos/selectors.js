@@ -1,5 +1,6 @@
+export const getErrorMessage = state => state.errorMessage;
+export const IsFetching = state => state.isFetching;
 export const getIds = state => state.ids;
-
 export const getTodo = (state, id) => state[id];
 
 export const getVisibleTodos = (state, filter) => {

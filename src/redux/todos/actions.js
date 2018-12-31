@@ -1,29 +1,40 @@
 import { v4 } from 'uuid';
 import * as api from '../../api/index';
 import * as selector from './selectors';
-import { REQUEST_TODOS, RECIEVE_TODOS, ADD_TODO, TOGGLE_TODO } from './types';
-
-const requestTodos = filter => ({
-  type: REQUEST_TODOS,
-  filter
-});
-
-const recieveTodos = (filter, response) => ({
-  type: RECIEVE_TODOS,
-  filter,
-  response
-});
+import {
+  ADD_TODO,
+  TOGGLE_TODO,
+  FETCH_TODOS_FAILURE,
+  FETCH_TODOS_REQUEST,
+  FETCH_TODOS_SUCCESS
+} from './types';
 
 export const fetchTodos = filter => (dispatch, getState) => {
   if (selector.getIsFetching(getState(), filter)) {
     return Promise.resolve();
   }
 
-  dispatch(requestTodos(filter));
+  dispatch({
+    type: FETCH_TODOS_REQUEST,
+    filter
+  });
 
-  return api
-    .fetchTodos(filter)
-    .then(response => recieveTodos(filter, response));
+  return api.fetchTodos(filter).then(
+    response => {
+      dispatch({
+        type: FETCH_TODOS_SUCCESS,
+        filter,
+        response
+      });
+    },
+    error => {
+      dispatch({
+        type: FETCH_TODOS_FAILURE,
+        filter,
+        message: error.message || 'something went wrong'
+      });
+    }
+  );
 };
 
 export const addTodo = text => ({
