@@ -45,8 +45,8 @@ VisibleTodoList.propTypes = {
   toggleTodo: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, { match }) => {
-  const filter = match.params.filter || 'all';
+const mapStateToProps = (state, { params }) => {
+  const filter = params.filter || 'all';
   return {
     todos: getVisibleTodos(state, filter),
     errorMessage: getErrorMessage(state, filter),

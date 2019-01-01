@@ -10,39 +10,35 @@ import {
 import * as selector from './selectors';
 
 const byId = (state = {}, action) => {
-    if (action.response) {
-      return {
-        ...state,
-        ...action.reponse.entities.todos,
-      }
-    }
-    return state;
+  if (action.response) {
+    return {
+      ...state,
+      ...action.reponse.entities.todos
+    };
   }
+  return state;
 };
 
 const createList = filter => {
   const handleToggle = (state, action) => {
-    const { result: toogleId, entities} = action.reponse;
-    const { completed } = entities.todos[toggleId];
-    const shouldRemove = (
+    const { result: toggledId, entities } = action.reponse;
+    const { completed } = entities.todos[toggledId];
+    const shouldRemove =
       (completed && filter === 'active') ||
-      (!completed && filter === 'completed')
-    );
-    return shouldRemove ? 
-      state.filter(id => id !== toggledId) :
-      state;
+      (!completed && filter === 'completed');
+    return shouldRemove ? state.filter(id => id !== toggledId) : state;
   };
   // eslint-disable-line arrow-body-style
   const ids = (state = [], action) => {
     switch (action.type) {
       case FETCH_TODOS_SUCCESS:
-        return filter === action.filter
-          ? action.response.result
-          : state;
+        return filter === action.filter ? action.response.result : state;
       case ADD_TODO_SUCCESS:
-        return filter !== 'completed' ? [...state, action.response.result] : state;
+        return filter !== 'completed'
+          ? [...state, action.response.result]
+          : state;
       case TOGGLE_TODO_SUCCESS:
-        return handleToggle(state, action)  
+        return handleToggle(state, action);
       default:
         return state;
     }
